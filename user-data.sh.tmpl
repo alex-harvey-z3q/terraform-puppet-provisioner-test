@@ -26,13 +26,7 @@ configure_autosign() {
   systemctl restart puppetserver
 }
 
-main() {
-	install_puppet
-	configure_autosign
-}
-
-if [ "$0" == "${BASH_SOURCE[0]}" ] ; then
-  main
-fi
+install_puppet
+configure_autosign
 
 # vim: set ft=sh:
