@@ -8,6 +8,9 @@ install_puppet() {
   echo 'export PATH=/opt/puppetlabs/puppet/bin:$PATH' \
     >> /etc/profile.d/puppet-agent.sh
   . /etc/profile.d/puppet-agent.sh
+  sed -i '
+    s/JAVA_ARGS.*/JAVA_ARGS="-Xms512m -Xmx512m"/
+    ' /etc/sysconfig/puppetserver # workaround for t2.micro 1GB RAM.
   puppetserver ca setup
 }
 
