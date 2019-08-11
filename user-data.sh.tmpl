@@ -12,6 +12,7 @@ install_puppet() {
     s/JAVA_ARGS.*/JAVA_ARGS="-Xms512m -Xmx512m"/
     ' /etc/sysconfig/puppetserver # workaround for t2.micro 1GB RAM.
   puppetserver ca setup
+  echo "127.0.0.1  puppet" >> /etc/hosts
 }
 
 configure_autosign() {
@@ -29,7 +30,27 @@ configure_autosign() {
   systemctl restart puppetserver
 }
 
-install_puppet
-configure_autosign
+install_git() {
+  yum -y install git
+}
+
+deploy_code() {
+  rm -rf /etc/puppetlabs/code/environments/production
+  git clone \
+    https://github.com/alexharv074/terraform-puppet-provisioner-test.git \
+    /etc/puppetlabs/code/environments/production
+}
+
+run_puppet() {
+  puppet agent -t
+}
+
+main() {
+  install_puppet
+  configure_autosign
+  install_git
+  deploy_code
+  run_puppet
+}
 
 # vim: set ft=sh:
