@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
-install_puppet() {
+install_puppetserver() {
   wget https://yum.puppet.com/puppet6-release-el-7.noarch.rpm
   rpm -Uvh puppet6-release-el-7.noarch.rpm
   yum-config-manager --enable puppet6
   yum -y install puppetserver
+}
+
+configure_puppetserver() {
   echo 'export PATH=/opt/puppetlabs/puppet/bin:$PATH' \
     >> /etc/profile.d/puppet-agent.sh
   . /etc/profile.d/puppet-agent.sh
   sed -i '
     s/JAVA_ARGS.*/JAVA_ARGS="-Xms512m -Xmx512m"/
-    ' /etc/sysconfig/puppetserver # workaround for t2.micro 1GB RAM.
+    ' /etc/sysconfig/puppetserver # workaround for t2.micro's 1GB RAM.
   puppetserver ca setup
   echo "127.0.0.1  puppet" >> /etc/hosts
 }
@@ -30,11 +33,8 @@ configure_autosign() {
   systemctl restart puppetserver
 }
 
-install_git() {
-  yum -y install git
-}
-
 deploy_code() {
+  yum -y install git
   rm -rf /etc/puppetlabs/code/environments/production
   git clone \
     https://github.com/alexharv074/terraform-puppet-provisioner-test.git \
@@ -46,9 +46,9 @@ run_puppet() {
 }
 
 main() {
-  install_puppet
+  install_puppetserver
+  configure_puppetserver
   configure_autosign
-  install_git
   deploy_code
   run_puppet
 }
