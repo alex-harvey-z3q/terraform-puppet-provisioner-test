@@ -41,16 +41,11 @@ deploy_code() {
     /etc/puppetlabs/code/environments/production
 }
 
-run_puppet() {
-  puppet agent -t
-}
-
 main() {
   install_puppetserver
   configure_puppetserver
   configure_autosign
   deploy_code
-  run_puppet
 }
 
 main
