@@ -5,7 +5,7 @@ install_puppet() {
   rpm -Uvh puppet6-release-el-7.noarch.rpm
   yum-config-manager --enable puppet6
   yum -y install puppetserver
-  echo '"PATH=/opt/puppetlabs/puppet/bin:$PATH"' \
+  echo 'export PATH=/opt/puppetlabs/puppet/bin:$PATH' \
     >> /etc/profile.d/puppet-agent.sh
   . /etc/profile.d/puppet-agent.sh
   puppetserver ca setup
