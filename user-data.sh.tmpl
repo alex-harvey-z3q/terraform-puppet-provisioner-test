@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+install_puppet() {
+  wget https://yum.puppet.com/puppet6-release-el-7.noarch.rpm
+  rpm -Uvh puppet6-release-el-7.noarch.rpm
+  yum-config-manager --enable puppet6
+  yum -y install puppetserver
+  echo '"PATH=/opt/puppetlabs/puppet/bin:$PATH"' \
+    >> /etc/profile.d/puppet-agent.sh
+  . /etc/profile.d/puppet-agent.sh
+  puppetserver ca setup
+}
+
+configure_autosign() {
+  gem install autosign
+  mkdir -p -m 750 /var/autosign
+  chown puppet: /var/autosign
+  touch /var/log/autosign.log
+  chown puppet: /var/log/autosign.log
+  autosign config setup
+  sed -i '
+    s!journalfile:.*!journalfile: "/var/autosign/autosign.journal"!
+    ' /etc/autosign.conf
+  puppet config set \
+    --section master autosign /opt/puppetlabs/puppet/bin/autosign-validator
+  systemctl restart puppetserver
+}
+
+main() {
+	install_puppet
+	configure_autosign
+}
+
+if [ "$0" == "${BASH_SOURCE[0]}" ] ; then
+  main
+fi
+
+# vim: set ft=sh:

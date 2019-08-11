@@ -1,0 +1,9 @@
+---
+modulepath: "~/.puppetlabs/bolt-code/modules:~/.puppetlabs/bolt-code/site-modules"
+inventoryfile: "~/.puppetlabs/bolt/inventory.yaml"
+concurrency: 10
+format: human
+ssh:
+  host-key-check: false
+  user: root
+  private-key: ~/.ssh/bolt_id 
