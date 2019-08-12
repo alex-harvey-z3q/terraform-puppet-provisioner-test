@@ -13,6 +13,7 @@ resource "aws_instance" "agent" {
   ami           = local.ami_id
   instance_type = "t2.micro"
   key_name      = "default"
+  user_data     = templatefile("${path.module}/user_data/agent.sh.tmpl", {})
 
   provisioner "puppet" {
     server      = aws_instance.master.public_dns
