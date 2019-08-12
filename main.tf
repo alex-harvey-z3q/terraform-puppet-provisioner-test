@@ -16,7 +16,7 @@ resource "aws_instance" "agent" {
   user_data     = templatefile("${path.module}/user_data/agent.sh.tmpl", {})
 
   provisioner "puppet" {
-    server      = aws_instance.puppet_master.public_dns
+    server      = aws_instance.master.public_dns
     connection {
       host        = self.public_ip
       private_key = file("${path.module}/keys/id_rsa")
