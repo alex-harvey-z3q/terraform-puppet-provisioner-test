@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Without $HOME, a message is seen in cloud-init-output.log during autosign:
+#   couldn't find login name -- expanding `~'
+export HOME='/root'
+
 configure_ssh() {
   sed -i '
     s/.*PermitRootLogin.*/PermitRootLogin without-password/
