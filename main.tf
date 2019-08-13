@@ -22,4 +22,6 @@ resource "aws_instance" "agent" {
       private_key = file("${path.module}/keys/id_rsa")
     }
   }
+
+  depends_on = [aws_instance.master]
 }
