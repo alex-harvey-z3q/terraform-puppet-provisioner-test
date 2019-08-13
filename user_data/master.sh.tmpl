@@ -47,7 +47,7 @@ EOF
 
 deploy_code() {
   yum -y install git
-  rmdir /etc/puppetlabs/code/environments/production
+  rm -rf /etc/puppetlabs/code/environments/production
   git clone \
     https://github.com/alexharv074/terraform-puppet-provisioner-test.git \
     /etc/puppetlabs/code/environments/production
