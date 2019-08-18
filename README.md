@@ -36,3 +36,18 @@ Logon:
 ```text
 ssh ec2-13-55-135-160.ap-southeast-2.compute.amazonaws.com
 ```
+
+## Usage
+
+Set up Bolt:
+
+```text
+▶ bash -x setup.sh
+```
+
+Apply Terraform:
+
+```text
+▶ terraform init
+▶ terraform apply -auto-approve
+```
