@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-brew cask install puppetlabs/puppet/puppet-bolt
+if ! command -v bolt ; then
+  brew cask install puppetlabs/puppet/puppet-bolt
+fi
 
 mkdir -p ~/.puppetlabs/bolt/
 
