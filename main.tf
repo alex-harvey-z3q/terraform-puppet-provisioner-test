@@ -6,14 +6,14 @@ resource "aws_instance" "master" {
   ami           = local.ami_id
   instance_type = "t2.micro"
   key_name      = "default"
-  user_data     = templatefile("${path.module}/user_data/master.sh.tmpl", {})
+  user_data     = file("${path.module}/user_data/master.sh")
 }
 
 resource "aws_instance" "agent" {
   ami           = local.ami_id
   instance_type = "t2.micro"
   key_name      = "default"
-  user_data     = templatefile("${path.module}/user_data/agent.sh.tmpl", {})
+  user_data     = file("${path.module}/user_data/agent.sh")
 
   provisioner "puppet" {
     server      = aws_instance.master.public_dns
