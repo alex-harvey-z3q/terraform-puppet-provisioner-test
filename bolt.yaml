@@ -5,5 +5,5 @@ concurrency: 10
 format: human
 ssh:
   host-key-check: false
-  user: root
-  private-key: ~/.ssh/bolt_id 
+  user: ec2-user
+  private-key: ~/.ssh/default.pem
