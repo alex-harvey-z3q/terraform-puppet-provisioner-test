@@ -6,10 +6,10 @@ fi
 
 mkdir -p ~/.puppetlabs/bolt/
 
-cp \
-  inventory.yaml \
-  bolt.yaml \
-  Puppetfile \
-  ~/.puppetlabs/bolt/
+(cd bolt && cp \
+    inventory.yaml \
+    bolt.yaml \
+    Puppetfile \
+    ~/.puppetlabs/bolt/)
 
 bolt puppetfile install
