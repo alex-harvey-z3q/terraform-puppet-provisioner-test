@@ -62,7 +62,7 @@ Where I'm stuck now:
 
 That response contains:
 
-```text
+```json
 {
   "items": [
     {
@@ -117,5 +117,5 @@ Parse that:
 /opt/puppetlabs/bolt/lib/ruby/gems/2.5.0/gems/concurrent-ruby-1.1.5/lib/concurrent/executor/ruby_thread_pool_executor.rb:320:in `block (2 levels) in create_worker'
 /opt/puppetlabs/bolt/lib/ruby/gems/2.5.0/gems/concurrent-ruby-1.1.5/lib/concurrent/executor/ruby_thread_pool_executor.rb:319:in `catch'
 /opt/puppetlabs/bolt/lib/ruby/gems/2.5.0/gems/concurrent-ruby-1.1.5/lib/concurrent/executor/ruby_thread_pool_executor.rb:319:in `block in create_worker'
-/opt/puppetlabs/bolt/lib/ruby/gems/2.5.0/gems/logging-2.2.2/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'%
+/opt/puppetlabs/bolt/lib/ruby/gems/2.5.0/gems/logging-2.2.2/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
 ```
