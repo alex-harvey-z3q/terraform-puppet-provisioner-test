@@ -10,6 +10,7 @@ resource "aws_instance" "master" {
 
   connection {
     host        = self.public_ip
+    type        = "ssh"
     user        = "ec2-user"
     private_key = file("~/.ssh/default.pem")
   }
@@ -29,6 +30,7 @@ resource "aws_instance" "agent" {
 
   connection {
     host        = self.public_ip
+    type        = "ssh"
     user        = "ec2-user"
     private_key = file("~/.ssh/default.pem")
   }
