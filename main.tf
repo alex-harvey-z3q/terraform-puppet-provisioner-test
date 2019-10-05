@@ -34,7 +34,7 @@ resource "aws_instance" "master" {
 
   connection {
     host        = self.public_ip
-    type        = "ssh"
+    type        = "ssh" // See https://github.com/hashicorp/terraform/issues/23004
     user        = "ec2-user"
     private_key = file(var.key_file)
   }
