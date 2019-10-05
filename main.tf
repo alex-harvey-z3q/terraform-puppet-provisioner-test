@@ -2,11 +2,15 @@ locals {
   ami_id = "ami-08589eca6dcc9b39c"
 }
 
+data "template_file" "user_data" {
+  template = file("${path.module}/user_data/master.sh")
+}
+
 resource "aws_instance" "master" {
   ami           = local.ami_id
   instance_type = "t2.micro"
   key_name      = "default"
-  user_data     = file("${path.module}/user_data/master.sh")
+  user_data     = data.template_file.user_data.rendered
 
   connection {
     host        = self.public_ip
