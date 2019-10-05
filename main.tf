@@ -1,5 +1,16 @@
-locals {
-  ami_id = "ami-08589eca6dcc9b39c"
+data "aws_ami" "ami" {
+  owners      = ["amazon"]
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["amzn*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
 }
 
 data "template_file" "user_data" {
@@ -7,7 +18,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_instance" "master" {
-  ami           = local.ami_id
+  ami           = data.aws_ami.ami.id
   instance_type = "t2.micro"
   key_name      = "default"
   user_data     = data.template_file.user_data.rendered
@@ -28,7 +39,7 @@ resource "aws_instance" "master" {
 }
 
 resource "aws_instance" "agent" {
-  ami           = local.ami_id
+  ami           = data.aws_ami.ami.id
   instance_type = "t2.micro"
   key_name      = "default"
 
