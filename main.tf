@@ -1,6 +1,15 @@
-variable "private_key" {
+variable "key_name" {
+  description = "The name of the EC2 key pair to use"
+  default     = "default"
+}
+
+variable "key_file" {
   description = "The private key for the ec2-user used in SSH connections and by Puppet Bolt"
   default     = "~/.ssh/default.pem"
+}
+
+locals {
+  instance_type = "t2.micro"
 }
 
 data "aws_ami" "ami" {
@@ -19,15 +28,15 @@ data "template_file" "user_data" {
 
 resource "aws_instance" "master" {
   ami           = data.aws_ami.ami.id
-  instance_type = "t2.micro"
-  key_name      = "default"
+  instance_type = local.instance_type
+  key_name      = var.key_name
   user_data     = data.template_file.user_data.rendered
 
   connection {
     host        = self.public_ip
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file(var.private_key)
+    private_key = file(var.key_file)
   }
 
   provisioner "remote-exec" {
@@ -40,14 +49,14 @@ resource "aws_instance" "master" {
 
 resource "aws_instance" "agent" {
   ami           = data.aws_ami.ami.id
-  instance_type = "t2.micro"
-  key_name      = "default"
+  instance_type = local.instance_type
+  key_name      = var.key_name
 
   connection {
     host        = self.public_ip
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file(var.private_key)
+    private_key = file(var.key_file)
   }
 
   provisioner "puppet" {
