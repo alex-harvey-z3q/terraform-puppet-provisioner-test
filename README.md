@@ -8,7 +8,7 @@ This is a proof of concept of the Puppet Terraform provisioner that was added in
 
 ### Terraform
 
-Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html). Puppet Bolt is also required by the setup.sh script will install it.
+Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html). Puppet Bolt is also required by the setup.sh script will install it. Note also that, at the time of writing, this project depends on an [unmerged](https://github.com/puppetlabs/puppetlabs-puppet_agent/pull/444) pull request I've raised for the [puppetlabs-puppet_agent](https://github.com/puppetlabs/puppetlabs-puppet_agent). This is branch is referenced in the [Puppetfile](./bolt/Puppetfile).
 
 ## Usage
 
