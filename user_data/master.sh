@@ -18,7 +18,10 @@ configure_puppetserver() {
   sed -i '
     s/JAVA_ARGS.*/JAVA_ARGS="-Xms512m -Xmx512m"/
     ' /etc/sysconfig/puppetserver # workaround for t2.micro's 1GB RAM.
-  puppetserver ca setup
+  local public_hostname=$(curl \
+    http://169.254.169.254/latest/meta-data/public-hostname)
+  puppetserver ca setup \
+    --subject-alt-names "$public_hostname",localhost,puppet
   echo "127.0.0.1  puppet" >> /etc/hosts
 }
 
