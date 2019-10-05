@@ -33,7 +33,7 @@ resource "aws_instance" "master" {
   provisioner "remote-exec" {
     on_failure = continue
     inline = [
-      "sudo sh -c 'while ! grep -q Cloud-init.*finished /var/log/cloud-init-output.log; do sleep 60; done'"
+      "sudo sh -c 'while ! grep -q Cloud-init.*finished /var/log/cloud-init-output.log; do sleep 20; done'"
     ]
   }
 }
