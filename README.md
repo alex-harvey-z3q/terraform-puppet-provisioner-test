@@ -1,10 +1,14 @@
 # Terraform Puppet Provisioner Test
 
+## Overview
+
+This is a proof of concept of the Puppet Terraform provisioner that was added in Terraform 0.12.2. It sets up a Puppet Master, a Puppet Agent that uses the latest Amazon Linux 2 AMI, installs a very simple "hello world" Puppet module, and then configures that agent node using this code.
+
 ## Dependencies
 
 ### Terraform
 
-Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html).
+Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html). Puppet Bolt is also required by the setup.sh script will install it.
 
 ## Usage
 
@@ -157,6 +161,10 @@ aws_instance.agent: Creation complete after 1m44s [id=i-097304dff49e6acc3]
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
+
+## Acknowledgements
+
+Thanks to Tim Sharpe at Puppet for writing the provisioner and assisting! Also thanks to Green Reed Technology for their earlier Puppet Provisioner [docs](https://www.greenreedtech.com/terraform-puppet-provisioner/).
 
 ## License
 
