@@ -9,12 +9,7 @@ data "aws_ami" "ami" {
 
   filter {
     name   = "name"
-    values = ["amzn*"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
   }
 }
 
