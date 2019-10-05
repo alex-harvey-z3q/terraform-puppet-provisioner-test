@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a proof of concept of the Puppet Terraform provisioner that was added in Terraform 0.12.2. It sets up a Puppet Master, a Puppet Agent that uses the latest Amazon Linux 2 AMI, installs a very simple "hello world" Puppet module, and then configures that agent node using this code.
+This is a proof of concept of the Puppet Terraform provisioner that was added in Terraform 0.12.2. It uses Terraform and the Terraform Puppet provisioner to set up a Puppet Master and Agent that both use the latest Amazon Linux 2 AMI, it installs a very simple "hello world" Puppet module on the Puppet Master, and then configures the agent node using this code.
 
 ## Dependencies
 
