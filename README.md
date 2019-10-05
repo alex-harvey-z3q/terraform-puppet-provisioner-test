@@ -6,6 +6,12 @@ This is a proof of concept of the Puppet Terraform provisioner that was added in
 
 It assumes you will use Mac OS X on your laptop. Minor changes would be required otherwise.
 
+## Architecture
+
+The following figure shows the main components of the solution:
+
+![Fig 1](./arch.jpg)
+
 ## Dependencies
 
 Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html).
