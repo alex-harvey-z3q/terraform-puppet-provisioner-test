@@ -4,11 +4,21 @@
 
 This is a proof of concept of the Puppet Terraform provisioner that was added in Terraform 0.12.2. It uses Terraform and the Terraform Puppet provisioner to set up a Puppet Master and Agent that both use the latest Amazon Linux 2 AMI, it installs a very simple "hello world" Puppet module on the Puppet Master, and then configures the agent node using this code.
 
+It assumes you will use Mac OS X on your laptop. Minor changes would be required otherwise.
+
 ## Dependencies
 
-### Terraform
+Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html).
 
-Install the latest Terraform (>= 0.12.2). Get that from [here](https://www.terraform.io/downloads.html). Puppet Bolt is also required by the setup.sh script will install it. Note also that, at the time of writing, this project depends on an [unmerged](https://github.com/puppetlabs/puppetlabs-puppet_agent/pull/444) pull request I've raised for the [puppetlabs-puppet_agent](https://github.com/puppetlabs/puppetlabs-puppet_agent). This is branch is referenced in the [Puppetfile](./bolt/Puppetfile).
+Puppet Bolt is also required, but the setup.sh script will install it if it's not there.
+
+Note also that, at the time of writing, the project depends on an [unmerged](https://github.com/puppetlabs/puppetlabs-puppet_agent/pull/444) pull request I've raised against the [puppetlabs-puppet_agent](https://github.com/puppetlabs/puppetlabs-puppet_agent) project to add Amazon Linux 2 support. This is branch is referenced in the [Puppetfile](./bolt/Puppetfile) so again no need to do anything yet.
+
+There is also an assumption that you will provide an EC2 key pair and it will have the name "default". If that's not there, create the EC2 Key Pair using:
+
+```text
+▶ aws ec2 create-key-pair --key-name default
+```
 
 ## Usage
 
