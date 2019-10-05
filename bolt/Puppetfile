@@ -1,3 +1,5 @@
 # Modules from the Puppet Forge.
 mod 'danieldreier/autosign'
-mod 'puppetlabs/puppet_agent'
+mod 'puppetlabs/puppet_agent',
+  :git => 'https://github.com/alexharv074/puppetlabs-puppet_agent.git',
+  :ref => 'MODULES-9981-add_amazon_linux_2_support_to_install_task'
