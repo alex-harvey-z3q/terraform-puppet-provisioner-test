@@ -1,3 +1,8 @@
+variable "private_key" {
+  description = "The private key for the ec2-user used in SSH connections and by Puppet Bolt"
+  default     = "~/.ssh/default.pem"
+}
+
 data "aws_ami" "ami" {
   owners      = ["amazon"]
   most_recent = true
@@ -27,7 +32,7 @@ resource "aws_instance" "master" {
     host        = self.public_ip
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("~/.ssh/default.pem")
+    private_key = file(var.private_key)
   }
 
   provisioner "remote-exec" {
@@ -47,7 +52,7 @@ resource "aws_instance" "agent" {
     host        = self.public_ip
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("~/.ssh/default.pem")
+    private_key = file(var.private_key)
   }
 
   provisioner "puppet" {
