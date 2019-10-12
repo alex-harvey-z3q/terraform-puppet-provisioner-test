@@ -46,17 +46,17 @@ resource "aws_instance" "master" {
   key_name      = var.key_name
   user_data     = data.template_file.user_data.rendered
 
-  connection {
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file(var.key_file)
-  }
-
   provisioner "remote-exec" {
     on_failure = continue
     inline = [
       "sudo sh -c 'while ! grep -q Cloud-init.*finished /var/log/cloud-init-output.log; do sleep 20; done'"
     ]
+
+    connection {
+      host        = self.public_ip
+      user        = "ec2-user"
+      private_key = file(var.key_file)
+    }
   }
 }
 
@@ -65,16 +65,16 @@ resource "aws_instance" "agent" {
   instance_type = local.instance_type
   key_name      = var.key_name
 
-  connection {
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file(var.key_file)
-  }
-
   provisioner "puppet" {
     use_sudo    = true
     server      = aws_instance.master.public_dns
     server_user = "ec2-user"
+
+    connection {
+      host        = self.public_ip
+      user        = "ec2-user"
+      private_key = file(var.key_file)
+    }
   }
 
   depends_on = [aws_instance.master]
@@ -90,18 +90,18 @@ resource "aws_instance" "os_win_agent" {
     create = "15m"
   }
 
-  connection {
-    host     = self.public_ip
-    type     = "winrm"
-    user     = "Administrator"
-    password = rsadecrypt(self.password_data, file(var.key_file))
-    timeout  = "10m"
-  }
-
   provisioner "puppet" {
     open_source = true
     server      = aws_instance.master.public_dns
     server_user = "ec2-user"
+
+    connection {
+      host     = self.public_ip
+      type     = "winrm"
+      user     = "Administrator"
+      password = rsadecrypt(self.password_data, file(var.key_file))
+      timeout  = "10m"
+    }
   }
 
   user_data  = data.template_file.winrm.rendered
