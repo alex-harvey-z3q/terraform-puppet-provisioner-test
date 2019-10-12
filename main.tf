@@ -22,8 +22,22 @@ data "aws_ami" "ami" {
   }
 }
 
+data "aws_ami" "windows_2012R2" {
+  most_recent = "true"
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2012-R2_RTM-English-64Bit-Base-*"]
+  }
+}
+
 data "template_file" "user_data" {
   template = file("${path.module}/user_data/master.sh")
+}
+
+data "template_file" "winrm" {
+  template = file("${path.module}/user_data/os_win_agent.xml")
 }
 
 resource "aws_instance" "master" {
@@ -63,5 +77,33 @@ resource "aws_instance" "agent" {
     server_user = "ec2-user"
   }
 
+  depends_on = [aws_instance.master]
+}
+
+resource "aws_instance" "os_win_agent" {
+  ami               = data.aws_ami.windows_2012R2.image_id
+  instance_type     = "t2.large"
+  key_name          = var.key_name
+  get_password_data = true
+
+  timeouts {
+    create = "15m"
+  }
+
+  connection {
+    host     = self.public_ip
+    type     = "winrm"
+    user     = "Administrator"
+    password = rsadecrypt(self.password_data, file(var.key_file))
+    timeout  = "10m"
+  }
+
+  provisioner "puppet" {
+    open_source = true
+    server      = aws_instance.master.public_dns
+    server_user = "ec2-user"
+  }
+
+  user_data  = data.template_file.winrm.rendered
   depends_on = [aws_instance.master]
 }
