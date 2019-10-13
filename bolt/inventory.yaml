@@ -1,6 +1,0 @@
----
-config:
-  ssh:
-    host-key-check: false
-    user: ec2-user
-    private-key: ~/.ssh/default.pem

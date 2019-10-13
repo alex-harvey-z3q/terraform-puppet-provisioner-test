@@ -7,7 +7,6 @@ fi
 mkdir -p ~/.puppetlabs/bolt/
 
 (cd bolt && cp \
-    inventory.yaml \
     bolt.yaml \
     Puppetfile \
     ~/.puppetlabs/bolt/)
