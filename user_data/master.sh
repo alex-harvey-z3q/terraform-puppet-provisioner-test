@@ -46,8 +46,6 @@ deploy_code() {
   git clone \
     https://github.com/alexharv074/terraform-puppet-provisioner-test.git \
     /etc/puppetlabs/code/environments/production
-  git clone \
-    https://github.com/heini/puppet-wait-for.git -b alexharvey/max_retries_broken /etc/puppetlabs/code/modules/wait_for
 }
 
 main() {
