@@ -61,6 +61,7 @@ resource "aws_instance" "master" {
 }
 
 resource "aws_instance" "agent" {
+  count = 0
   ami           = data.aws_ami.ami.id
   instance_type = local.instance_type
   key_name      = var.key_name
